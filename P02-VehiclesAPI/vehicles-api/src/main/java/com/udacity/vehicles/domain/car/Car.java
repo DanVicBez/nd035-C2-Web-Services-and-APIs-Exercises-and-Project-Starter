@@ -25,90 +25,90 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Car {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+  @CreatedDate
+  private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
+  @LastModifiedDate
+  private LocalDateTime modifiedAt;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Condition condition;
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private Condition condition;
 
-    @Valid
-    @Embedded
-    private Details details = new Details();
+  @Valid
+  @Embedded
+  private Details details = new Details();
 
-    @Valid
-    @Embedded
-    private Location location = new Location(0d, 0d);
+  @Valid
+  @Embedded
+  private Location location = new Location(0d, 0d);
 
-    @Transient
-    private String price;
+  @Transient
+  private String price;
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public LocalDateTime getModifiedAt() {
-        return modifiedAt;
-    }
+  public LocalDateTime getModifiedAt() {
+    return modifiedAt;
+  }
 
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
+  public void setModifiedAt(LocalDateTime modifiedAt) {
+    this.modifiedAt = modifiedAt;
+  }
 
-    public Condition getCondition() {
-        return condition;
-    }
+  public Condition getCondition() {
+    return condition;
+  }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
-    }
+  public void setCondition(Condition condition) {
+    this.condition = condition;
+  }
 
-    public Details getDetails() {
-        return details;
-    }
+  public Details getDetails() {
+    return details;
+  }
 
-    public void setDetails(Details details) {
-        this.details = details;
-    }
+  public void setDetails(Details details) {
+    this.details = details;
+  }
 
-    public Location getLocation() {
-        return location;
-    }
+  public Location getLocation() {
+    return location;
+  }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+  public void setLocation(Location location) {
+    this.location = location;
+  }
 
-    public String getPrice() {
-        return price;
-    }
+  public String getPrice() {
+    return price;
+  }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
+  public void setPrice(String price) {
+    this.price = price;
+  }
 
-	@Override
-	public String toString() {
-		return "Car [condition=" + condition + ", details=" + details + ", location=" + location + ", price=" + price
-				+ "]";
-	}
+  @Override
+  public String toString() {
+    return "Car [condition=" + condition + ", details=" + details + ", location=" + location
+        + ", price=" + price + "]";
+  }
 }

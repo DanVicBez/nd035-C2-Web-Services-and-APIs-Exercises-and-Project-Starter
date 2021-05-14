@@ -7,121 +7,121 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * Declares the additional detail variables for each Car object,
- * along with related methods for access and setting.
+ * Declares the additional detail variables for each Car object, along with related methods for
+ * access and setting.
  */
 @Embeddable
 public class Details {
 
-    @NotBlank
-    private String body;
+  @NotBlank
+  private String body;
 
-    @NotBlank
-    private String model;
+  @NotBlank
+  private String model;
 
-    @NotNull
-    @ManyToOne
-    private Manufacturer manufacturer;
+  @NotNull
+  @ManyToOne
+  private Manufacturer manufacturer;
 
-    private Integer numberOfDoors;
+  private Integer numberOfDoors;
 
-    private String fuelType;
+  private String fuelType;
 
-    private String engine;
+  private String engine;
 
-    private Integer mileage;
+  private Integer mileage;
 
-    private Integer modelYear;
+  private Integer modelYear;
 
-    private Integer productionYear;
+  private Integer productionYear;
 
-    private String externalColor;
+  private String externalColor;
 
-    public String getBody() {
-        return body;
-    }
+  public String getBody() {
+    return body;
+  }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+  public void setBody(String body) {
+    this.body = body;
+  }
 
-    public String getModel() {
-        return model;
-    }
+  public String getModel() {
+    return model;
+  }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+  public void setModel(String model) {
+    this.model = model;
+  }
 
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
+  public Manufacturer getManufacturer() {
+    return manufacturer;
+  }
 
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
+  public void setManufacturer(Manufacturer manufacturer) {
+    this.manufacturer = manufacturer;
+  }
 
-    public Integer getNumberOfDoors() {
-        return numberOfDoors;
-    }
+  public Integer getNumberOfDoors() {
+    return numberOfDoors;
+  }
 
-    public void setNumberOfDoors(Integer numberOfDoors) {
-        this.numberOfDoors = numberOfDoors;
-    }
+  public void setNumberOfDoors(Integer numberOfDoors) {
+    this.numberOfDoors = numberOfDoors;
+  }
 
-    public String getFuelType() {
-        return fuelType;
-    }
+  public String getFuelType() {
+    return fuelType;
+  }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
+  public void setFuelType(String fuelType) {
+    this.fuelType = fuelType;
+  }
 
-    public String getEngine() {
-        return engine;
-    }
+  public String getEngine() {
+    return engine;
+  }
 
-    public void setEngine(String engine) {
-        this.engine = engine;
-    }
+  public void setEngine(String engine) {
+    this.engine = engine;
+  }
 
-    public Integer getMileage() {
-        return mileage;
-    }
+  public Integer getMileage() {
+    return mileage;
+  }
 
-    public void setMileage(Integer mileage) {
-        this.mileage = mileage;
-    }
+  public void setMileage(Integer mileage) {
+    this.mileage = mileage;
+  }
 
-    public Integer getModelYear() {
-        return modelYear;
-    }
+  public Integer getModelYear() {
+    return modelYear;
+  }
 
-    public void setModelYear(Integer modelYear) {
-        this.modelYear = modelYear;
-    }
+  public void setModelYear(Integer modelYear) {
+    this.modelYear = modelYear;
+  }
 
-    public Integer getProductionYear() {
-        return productionYear;
-    }
+  public Integer getProductionYear() {
+    return productionYear;
+  }
 
-    public void setProductionYear(Integer productionYear) {
-        this.productionYear = productionYear;
-    }
+  public void setProductionYear(Integer productionYear) {
+    this.productionYear = productionYear;
+  }
 
-    public String getExternalColor() {
-        return externalColor;
-    }
+  public String getExternalColor() {
+    return externalColor;
+  }
 
-    public void setExternalColor(String externalColor) {
-        this.externalColor = externalColor;
-    }
+  public void setExternalColor(String externalColor) {
+    this.externalColor = externalColor;
+  }
 
-	@Override
-	public String toString() {
-		return "Details [body=" + body + ", model=" + model + ", manufacturer=" + manufacturer + ", numberOfDoors="
-				+ numberOfDoors + ", fuelType=" + fuelType + ", engine=" + engine + ", mileage=" + mileage
-				+ ", modelYear=" + modelYear + ", productionYear=" + productionYear + ", externalColor=" + externalColor
-				+ "]";
-	}
+  @Override
+  public String toString() {
+    return "Details [body=" + body + ", model=" + model + ", manufacturer=" + manufacturer
+        + ", numberOfDoors=" + numberOfDoors + ", fuelType=" + fuelType + ", engine=" + engine
+        + ", mileage=" + mileage + ", modelYear=" + modelYear + ", productionYear=" + productionYear
+        + ", externalColor=" + externalColor + "]";
+  }
 }
