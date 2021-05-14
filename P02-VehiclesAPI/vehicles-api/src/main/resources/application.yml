@@ -1,0 +1,6 @@
+maps:
+  endpoint: http://localhost:9191
+
+eureka:
+  client:
+    register-with-eureka: false
