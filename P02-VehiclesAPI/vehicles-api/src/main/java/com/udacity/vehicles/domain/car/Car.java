@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -104,4 +105,10 @@ public class Car {
     public void setPrice(String price) {
         this.price = price;
     }
+
+	@Override
+	public String toString() {
+		return "Car [condition=" + condition + ", details=" + details + ", location=" + location + ", price=" + price
+				+ "]";
+	}
 }

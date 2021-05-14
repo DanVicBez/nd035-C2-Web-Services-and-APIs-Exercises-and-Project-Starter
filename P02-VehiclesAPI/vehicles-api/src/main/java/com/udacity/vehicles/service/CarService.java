@@ -3,6 +3,8 @@ package com.udacity.vehicles.service;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -42,8 +44,13 @@ public class CarService {
          *   If it does not exist, throw a CarNotFoundException
          *   Remove the below code as part of your implementation.
          */
-        Car car = new Car();
+        Optional<Car> car = repository.findById(id);
+        if (car.isPresent()) {
+        	return car.get();
+        }
 
+        throw new CarNotFoundException("No car found with an ID of " + id);
+        
         /**
          * TODO: Use the Pricing Web client you create in `VehiclesApiApplication`
          *   to get the price based on the `id` input'
@@ -63,7 +70,7 @@ public class CarService {
          */
 
 
-        return car;
+//        return car;
     }
 
     /**
