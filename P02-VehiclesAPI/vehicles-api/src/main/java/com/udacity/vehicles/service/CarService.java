@@ -40,16 +40,9 @@ public class CarService {
    * @return the requested car's information, including location and price
    */
   public Car findById(Long id) {
-    /**
-     * TODO: Find the car by ID from the `repository` if it exists. If it does not exist, throw a
-     * CarNotFoundException Remove the below code as part of your implementation.
-     */
     Optional<Car> car = repository.findById(id);
-    if (car.isPresent()) {
-      return car.get();
-    }
-
-    throw new CarNotFoundException("No car found with an ID of " + id);
+   
+    return car.orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + id));
 
     /**
      * TODO: Use the Pricing Web client you create in `VehiclesApiApplication` to get the price
@@ -66,9 +59,6 @@ public class CarService {
      * Location class file also uses @transient for the address, meaning the Maps service needs to
      * be called each time for the address.
      */
-
-
-    // return car;
   }
 
   /**
@@ -83,7 +73,7 @@ public class CarService {
         carToBeUpdated.setDetails(car.getDetails());
         carToBeUpdated.setLocation(car.getLocation());
         return repository.save(carToBeUpdated);
-      }).orElseThrow(CarNotFoundException::new);
+      }).orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + car.getId()));
     }
 
     return repository.save(car);
@@ -95,16 +85,7 @@ public class CarService {
    * @param id the ID number of the car to delete
    */
   public void delete(Long id) {
-    /**
-     * TODO: Find the car by ID from the `repository` if it exists. If it does not exist, throw a
-     * CarNotFoundException
-     */
-
-
-    /**
-     * TODO: Delete the car from the repository.
-     */
-
-
+    Car car = repository.findById(id).orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + id));
+    repository.delete(car);
   }
 }
