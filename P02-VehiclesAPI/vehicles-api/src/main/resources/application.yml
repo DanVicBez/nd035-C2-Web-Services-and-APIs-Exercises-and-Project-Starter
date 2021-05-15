@@ -1,6 +1,9 @@
 maps:
   endpoint: http://localhost:9191
 
+pricing:
+  endpoint: prices  
+
 eureka:
   client:
     register-with-eureka: false

@@ -1,10 +1,11 @@
 package com.udacity.vehicles.service;
 
+import com.udacity.vehicles.client.maps.MapsClient;
+import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
-import java.util.Optional;
-
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,15 +14,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CarService {
-
   private final CarRepository repository;
+  private final MapsClient mapsClient;
+  private final PriceClient priceClient;
 
-  public CarService(CarRepository repository) {
-    /**
-     * TODO: Add the Maps and Pricing Web Clients you create in `VehiclesApiApplication` as
-     * arguments and set them here.
-     */
+  public CarService(CarRepository repository, MapsClient mapsClient, PriceClient priceClient) {
     this.repository = repository;
+    this.mapsClient = mapsClient;
+    this.priceClient = priceClient;
   }
 
   /**
@@ -30,7 +30,11 @@ public class CarService {
    * @return a list of all vehicles in the CarRepository
    */
   public List<Car> list() {
-    return repository.findAll();
+    return repository.findAll().stream().map(car -> {
+      addPriceFor(car);
+      addLocationFor(car);
+      return car;
+    }).collect(Collectors.toList());
   }
 
   /**
@@ -40,25 +44,10 @@ public class CarService {
    * @return the requested car's information, including location and price
    */
   public Car findById(Long id) {
-    Optional<Car> car = repository.findById(id);
-   
-    return car.orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + id));
-
-    /**
-     * TODO: Use the Pricing Web client you create in `VehiclesApiApplication` to get the price
-     * based on the `id` input' TODO: Set the price of the car Note: The car class file
-     * uses @transient, meaning you will need to call the pricing service each time to get the
-     * price.
-     */
-
-
-    /**
-     * TODO: Use the Maps Web client you create in `VehiclesApiApplication` to get the address for
-     * the vehicle. You should access the location from the car object and feed it to the Maps
-     * service. TODO: Set the location of the vehicle, including the address information Note: The
-     * Location class file also uses @transient for the address, meaning the Maps service needs to
-     * be called each time for the address.
-     */
+    Car car = repository.findById(id).orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + id));
+    addPriceFor(car);
+    addLocationFor(car);
+    return car;
   }
 
   /**
@@ -68,15 +57,22 @@ public class CarService {
    * @return the new/updated car is stored in the repository
    */
   public Car save(Car car) {
+    Car toSave = car;
+
+    // if ID passed in, try to find the car to be updated
     if (car.getId() != null) {
-      return repository.findById(car.getId()).map(carToBeUpdated -> {
-        carToBeUpdated.setDetails(car.getDetails());
-        carToBeUpdated.setLocation(car.getLocation());
-        return repository.save(carToBeUpdated);
-      }).orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + car.getId()));
+      toSave = repository.findById(car.getId()).orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + car.getId()));
+
+      toSave.setDetails(car.getDetails());
+      toSave.setLocation(car.getLocation());
     }
 
-    return repository.save(car);
+    // this will set the ID if it is a new car being added
+    toSave = repository.save(toSave);
+
+    addPriceFor(toSave);
+    addLocationFor(toSave);
+    return toSave;
   }
 
   /**
@@ -87,5 +83,13 @@ public class CarService {
   public void delete(Long id) {
     Car car = repository.findById(id).orElseThrow(() -> new CarNotFoundException("No car found with an ID of " + id));
     repository.delete(car);
+  }
+  
+  private void addPriceFor(Car car) {
+    car.setPrice(priceClient.getPrice(car.getId()));
+  }
+  
+  private void addLocationFor(Car car) {
+    car.setLocation(mapsClient.getAddress(car.getLocation()));
   }
 }
