@@ -5,6 +5,11 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.domain.manufacturer.ManufacturerRepository;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +25,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableSwagger2
 public class VehiclesApiApplication {
   public static void main(String[] args) {
     SpringApplication.run(VehiclesApiApplication.class, args);
@@ -67,9 +73,19 @@ public class VehiclesApiApplication {
   @Bean(name = "pricing")
   public WebClient webClientPricing(EurekaClient eureka) {
     Application application = eureka.getApplication("pricing-service");
-    if (application == null) return null; // allows JUnits to run without Eureka
-    
+    if (application == null)
+      return null; // allows JUnits to run without Eureka
+
     InstanceInfo pricingService = application.getInstances().get(0);
     return WebClient.create(pricingService.getHomePageUrl());
+  }
+
+  @Bean
+  public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(RequestHandlerSelectors.any())
+        .paths(PathSelectors.any())
+        .build();
   }
 }
