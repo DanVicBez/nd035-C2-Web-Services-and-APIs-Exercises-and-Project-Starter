@@ -2,6 +2,7 @@ package com.udacity.vehicles;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
 import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.domain.manufacturer.ManufacturerRepository;
 import org.modelmapper.ModelMapper;
@@ -65,7 +66,10 @@ public class VehiclesApiApplication {
    */
   @Bean(name = "pricing")
   public WebClient webClientPricing(EurekaClient eureka) {
-    InstanceInfo pricingService = eureka.getApplication("pricing-service").getInstances().get(0);
+    Application application = eureka.getApplication("pricing-service");
+    if (application == null) return null; // allows JUnits to run without Eureka
+    
+    InstanceInfo pricingService = application.getInstances().get(0);
     return WebClient.create(pricingService.getHomePageUrl());
   }
 }
