@@ -65,6 +65,7 @@ public class CarService {
 
       toSave.setDetails(car.getDetails());
       toSave.setLocation(car.getLocation());
+      toSave.setCondition(car.getCondition());
     }
 
     // this will set the ID if it is a new car being added

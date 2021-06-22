@@ -33,6 +33,7 @@ public class VehiclesApiApplicationTests {
   
   @Test
   public void testAddAndDeleteCar() {
+    // create
     ResponseEntity<Car> response = restTemplate.postForEntity("http://localhost:" + port + "/cars", getCar(), Car.class);
     assertEquals(1L, response.getBody().getId().longValue());
     assertNotNull(response.getBody().getLocation().getAddress());
@@ -42,6 +43,16 @@ public class VehiclesApiApplicationTests {
     assertTrue(response.getBody().getPrice().startsWith("USD "));
     assertEquals(4, response.getBody().getDetails().getNumberOfDoors().intValue());
     
+    // update
+    Car car = getCar();
+    car.setCondition(Condition.NEW);
+    
+    restTemplate.put("http://localhost:" + port + "/cars/1", car);
+
+    response = restTemplate.getForEntity("http://localhost:" + port + "/cars/1", Car.class);
+    assertEquals(Condition.NEW, response.getBody().getCondition());
+    
+    // delete
     restTemplate.delete("http://localhost:" + port + "/cars/1");
 
     response = restTemplate.getForEntity("http://localhost:" + port + "/cars/1", Car.class);
